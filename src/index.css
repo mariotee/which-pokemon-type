@@ -14,5 +14,53 @@ code {
 
 .poke-list {
   min-height: 440pt;
-  margin-bottom: 48pt;
+}
+
+.pokeball-spinner {
+  margin: 32pt auto 10pt auto;
+  height: 125pt;
+  width: 125pt;
+  border: 6pt solid #383b4f;
+  border-radius: 50%;
+  background-image: linear-gradient(
+    #f51939 62.5pt,
+    white 62.5pt
+  );
+  animation: load 5s infinite;
+}
+
+.pokeball-spinner:before {
+  position: absolute;
+  content: "";
+  height: 9pt;
+  width: 122pt;
+  background-color: #383b4f;
+  top: 56pt;
+  left: -5pt;
+}
+
+.pokeball-spinner:after {
+  position: absolute;
+  border-radius: 50%;
+  content: "";
+  height: 45pt;
+  width: 45pt;
+  background-image: radial-gradient(
+    #ffffffff 0pt, #ffffffff 5pt, 
+    #383b4f 5pt, #383b4f 7.5pt, 
+    #ffffff 7.5pt, #ffffff 16pt,
+    #383b4f 16pt
+  );
+  top: 36pt;
+  right: 33pt;
+}
+
+@keyframes load {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
