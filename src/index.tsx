@@ -1,11 +1,13 @@
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import bootstrap from "bootstrap";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
 import App from 'App';
-import reportWebVitals from './reportWebVitals';
+
+//import reportWebVitals from './reportWebVitals';
+import './index.css';
+import "./bootstrap.min.css";
+
 
 ReactDOM.render(
   <React.StrictMode>
