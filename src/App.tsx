@@ -3,22 +3,52 @@ import axios from "axios";
 
 import './App.css';
 
-const App = () => {
-  const [pokemon, setPokemon] = React.useState([] as any[]);
+const types = [
+  "normal",
+  "grass",
+  "fire",
+  "water",
+  "electric",
+  "ice",
+  "fighting",
+  "poison",
+  "ground",
+  "flying",
+  "psychic",
+  "bug",
+  "rock",
+  "ghost",
+  "dark",
+  "dragon",
+  "steel",
+  "fairy",
+]
 
-  const fetchFirePokemon = async () => {
-    setPokemon((await axios.get("https://pokeapi.co/api/v2/type/fire")).data.pokemon);
+const App = () => {
+  const [type1, setType1] = React.useState("" as string);
+  const [type2, setType2] = React.useState("" as string);  
+
+  const fetchPokemon = async () => {
+    
   }
 
-  React.useEffect(() => {
-    fetchFirePokemon();
-  }, [])
-
   return <div className="App">
-      Pokemon Types (Fire)
+      Pokemon Types
+      <label>Type1</label>
+      <select value={type1} onChange={(e) => {setType1(e.target.value)}}>
+      <option>""</option>
       {
-        pokemon.map((e, i) => <p>{i+1}: {e.pokemon.name}</p>)
+        types.map((e) => <option key={"type1-o-"+{e}}>{e}</option>)
       }
+      </select>
+      <label>Type2</label>
+      <select value={type2} onChange={(e) => {setType2(e.target.value)}}>
+      <option>""</option>
+      {
+        types.map((e) => <option key={"type2-o-"+{e}}>{e}</option>)
+      }
+      </select>
+      <button onClick={fetchPokemon}>Find Me Pokemon!</button>
   </div>
 }
 
