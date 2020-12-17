@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.poke-list {
+  min-height: 440pt;
+  margin-bottom: 48pt;
+}

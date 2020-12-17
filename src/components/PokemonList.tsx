@@ -4,10 +4,10 @@ interface IPokemonListProps {
     data: string[];
 }
 
-const PokemonList = ({data}: IPokemonListProps) => <React.Fragment>
+const PokemonList = ({data}: IPokemonListProps) => <div className="poke-list">
 {
     data.map((name, index) => <p key={"pokemon"+index}>{index+1}: {name}</p>)
 }
-</React.Fragment>
+</div>
 
 export default PokemonList;
