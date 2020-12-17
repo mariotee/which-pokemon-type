@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/which-pokemon-type/static/css/main.b2caf002.chunk.css",
+    "main.js": "/which-pokemon-type/static/js/main.f2c4d3e3.chunk.js",
+    "main.js.map": "/which-pokemon-type/static/js/main.f2c4d3e3.chunk.js.map",
+    "runtime-main.js": "/which-pokemon-type/static/js/runtime-main.dc71981a.js",
+    "runtime-main.js.map": "/which-pokemon-type/static/js/runtime-main.dc71981a.js.map",
+    "static/js/2.b1683969.chunk.js": "/which-pokemon-type/static/js/2.b1683969.chunk.js",
+    "static/js/2.b1683969.chunk.js.map": "/which-pokemon-type/static/js/2.b1683969.chunk.js.map",
+    "index.html": "/which-pokemon-type/index.html",
+    "static/css/main.b2caf002.chunk.css.map": "/which-pokemon-type/static/css/main.b2caf002.chunk.css.map",
+    "static/js/2.b1683969.chunk.js.LICENSE.txt": "/which-pokemon-type/static/js/2.b1683969.chunk.js.LICENSE.txt",
+    "static/media/bug.167802fd.png": "/which-pokemon-type/static/media/bug.167802fd.png",
+    "static/media/dark.c0450a81.png": "/which-pokemon-type/static/media/dark.c0450a81.png",
+    "static/media/dragon.3c3d4c99.png": "/which-pokemon-type/static/media/dragon.3c3d4c99.png",
+    "static/media/electric.2e3808d7.png": "/which-pokemon-type/static/media/electric.2e3808d7.png",
+    "static/media/fairy.b3cc9537.png": "/which-pokemon-type/static/media/fairy.b3cc9537.png",
+    "static/media/fighting.c777e8ec.png": "/which-pokemon-type/static/media/fighting.c777e8ec.png",
+    "static/media/fire.3277d77f.png": "/which-pokemon-type/static/media/fire.3277d77f.png",
+    "static/media/flying.7de276f3.png": "/which-pokemon-type/static/media/flying.7de276f3.png",
+    "static/media/ghost.7452d549.png": "/which-pokemon-type/static/media/ghost.7452d549.png",
+    "static/media/grass.0c8a77ef.png": "/which-pokemon-type/static/media/grass.0c8a77ef.png",
+    "static/media/ground.0ddb1818.png": "/which-pokemon-type/static/media/ground.0ddb1818.png",
+    "static/media/ice.a9638502.png": "/which-pokemon-type/static/media/ice.a9638502.png",
+    "static/media/normal.a9776648.png": "/which-pokemon-type/static/media/normal.a9776648.png",
+    "static/media/poison.8f3b0bcd.png": "/which-pokemon-type/static/media/poison.8f3b0bcd.png",
+    "static/media/psychic.7f7cc4f4.png": "/which-pokemon-type/static/media/psychic.7f7cc4f4.png",
+    "static/media/rock.06ce1a1f.png": "/which-pokemon-type/static/media/rock.06ce1a1f.png",
+    "static/media/steel.86c2d7c9.png": "/which-pokemon-type/static/media/steel.86c2d7c9.png",
+    "static/media/water.2fcb40f7.png": "/which-pokemon-type/static/media/water.2fcb40f7.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dc71981a.js",
+    "static/js/2.b1683969.chunk.js",
+    "static/css/main.b2caf002.chunk.css",
+    "static/js/main.f2c4d3e3.chunk.js"
+  ]
+}
