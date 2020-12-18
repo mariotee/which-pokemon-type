@@ -13,6 +13,7 @@ code {
 }
 
 .poke-list {
+  margin: 32pt auto;
   min-height: 440pt;
 }
 
