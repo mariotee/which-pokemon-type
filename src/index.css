@@ -24,22 +24,22 @@ code {
   border: 6pt solid #383b4f;
   border-radius: 50%;
   background-image: linear-gradient(
-    #f51939 62.5pt,
-    white 62.5pt
+    #f51939 58pt,
+    white 58pt
   );
   animation: load 5s infinite;
 }
-
+/*line*/
 .pokeball-spinner:before {
   position: absolute;
   content: "";
   height: 9pt;
   width: 122pt;
   background-color: #383b4f;
-  top: 56pt;
+  top: 52pt;
   left: -5pt;
 }
-
+/*button*/
 .pokeball-spinner:after {
   position: absolute;
   border-radius: 50%;

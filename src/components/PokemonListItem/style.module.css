@@ -1,0 +1,13 @@
+.pokeNumber {
+    position: absolute;
+    top: 8pt;
+    left: 8pt;
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: #66bbff33;
+    border: 2px solid #66bbff66;
+    border-radius: 50%;
+    height: 48pt;
+    width: 48pt;
+    padding: 12pt 2pt 0 0;
+}

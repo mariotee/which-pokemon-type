@@ -23,15 +23,16 @@ const App = () => {
   const [pokemon, setPokemon] = React.useState([] as IPokemon[]);
 
   const selectPokemonData = async (data: IPokemonFromType[]): Promise<IPokemon[]> => {    
-    const filteredData = data.filter((x) => !x.pokemon.name.endsWith("-totem") && !x.pokemon.name.endsWith("-gmax"));
+    const filteredData = data.filter((x) => !x.pokemon.name.includes("-totem") && !x.pokemon.name.includes("-gmax"));
     const pokemonDataSet: IPokemon[] = [];
 
     for (const pokemonType of filteredData) {
       let pokemonData = await axios.get(pokemonType.pokemon.url);
 
       pokemonDataSet.push({
+        id: pokemonData.data.id,
         name: pokemonData.data.name,
-        number: pokemonData.data.id,
+        number: pokemonData.data.species.url.split("/")[6],
         imageUrl: pokemonData.data.sprites.front_default,
         type1: pokemonData.data.types[0].type.name,
         type2: pokemonData.data.types[1] && pokemonData.data.types[1].type.name,
@@ -43,13 +44,13 @@ const App = () => {
 
   const fetchPokemon = async () => {
     setPokemon([]);
-    setLoading(true);    
+    setLoading(true);
 
     if (type1.length > 0 && type2.length > 0) {
       let data1 = await selectPokemonData((await axios.get(`${API_URL}/${type1}`)).data.pokemon);
       let data2 = await selectPokemonData((await axios.get(`${API_URL}/${type2}`)).data.pokemon);
-            
-      setPokemon(data1.filter((x: IPokemon) => data2.map((x) => x.number).includes(x.number)));
+                  
+      setPokemon(data1.filter((x: IPokemon) => data2.map((x) => x.id).includes(x.id)));
     } else if (type1.length > 0) {
       let data = await selectPokemonData((await axios.get(`${API_URL}/${type1}`)).data.pokemon);
 
