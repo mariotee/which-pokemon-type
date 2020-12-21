@@ -13,3 +13,18 @@ export interface IPokemonFromType {
         url: string;
     }
 }
+
+export interface IPokemonType {
+    name: string;
+    strongAgainst: string[];
+    vulnerableTo: string[];
+    weakAgainst: string[];
+    resistantTo: string[];
+    zeroAgainst: string[];
+    immuneTo: string[];
+}
+
+export interface IPokemonTypeDataItem {
+    name: string;
+    url: string;
+}

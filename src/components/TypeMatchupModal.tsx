@@ -1,0 +1,125 @@
+import { IPokemonType } from 'models/Pokemon';
+import * as React from 'react';
+import { Modal } from 'react-bootstrap';
+
+import { TYPES } from 'Util/pokemonTypes';
+import { Capitalise as C } from "Util/string";
+
+export interface ITypeMatchupModalProps {
+    show: boolean;
+    onHide(): void;
+    type1: IPokemonType;
+    type2: IPokemonType;
+}
+
+const TypeMatchupModal = ({show, onHide, type1, type2}: ITypeMatchupModalProps) => {
+    const getOffensiveMultiplier1 = (typeName: string) => {        
+        let multiplier = 1;
+
+        if (!type1) {
+            return "";
+        }
+
+        if (type1.strongAgainst.includes(typeName)) {
+            multiplier *= 2;
+        }
+
+        if (type1.weakAgainst.includes(typeName)) {
+            multiplier *= 0.5;
+        }
+
+        if (type1.zeroAgainst.includes(typeName)) {
+            multiplier *= 0;
+        }
+
+        return "x"+multiplier;
+    }
+
+    const getOffensiveMultiplier2 = (typeName: string) => {
+        if (!type2) {
+            return "";
+        }
+
+        let multiplier = 1;
+
+        if (type2.strongAgainst.includes(typeName)) {
+            multiplier *= 2;
+        }
+
+        if (type2.weakAgainst.includes(typeName)) {
+            multiplier *= 0.5;
+        }
+
+        if (type2.zeroAgainst.includes(typeName)) {
+            multiplier *= 0;
+        }
+
+        return "x"+multiplier;
+    }
+
+    const getDefensiveMultiplier = (typeName: string) => {
+        if (!type1 && !type2) {
+            return "";
+        }
+
+        let multiplier = 1;
+
+        if (type1) {
+            if (type1.vulnerableTo.includes(typeName)) {
+                multiplier *= 2;
+            }
+
+            if (type1.resistantTo.includes(typeName)) {
+                multiplier *= 0.5;
+            }
+
+            if (type1.immuneTo.includes(typeName)) {
+                multiplier *= 0;
+            }
+        }
+
+        if (type2) {
+            if (type2.vulnerableTo.includes(typeName)) {
+                multiplier *= 2;
+            }
+
+            if (type2.resistantTo.includes(typeName)) {
+                multiplier *= 0.5;
+            }
+
+            if (type2.immuneTo.includes(typeName)) {
+                multiplier *= 0;
+            }
+        }
+
+        return "x"+multiplier;
+    }
+
+    return <Modal show={show} onHide={onHide}>
+        <Modal.Header closeButton={true}><h3>Type Matchups</h3></Modal.Header>
+        <Modal.Body>
+        <table className="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <td className="table-primary">Opponent Type</td>
+                    <td className="table-primary">{type1 && "Offense "+C(type1.name)}</td>
+                    <td className="table-primary">{type2 && "Offense "+C(type2.name)}</td>
+                    <td className="table-primary">{(type1 || type2) && "Defense "}</td>
+                </tr>
+            </thead>
+            <tbody>
+            {
+                TYPES.map((type) => <tr>
+                    <td>{C(type)}</td>
+                    <td>{getOffensiveMultiplier1(type)}</td>
+                    <td>{getOffensiveMultiplier2(type)}</td>
+                    <td>{getDefensiveMultiplier(type)}</td>
+                </tr>)
+            }
+            </tbody>
+        </table>
+        </Modal.Body>
+    </Modal>
+}
+
+export default TypeMatchupModal;

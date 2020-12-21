@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Capitalise } from "Util/string";
+import { TYPES } from "Util/pokemonTypes";
 
 import NormalSymbol from "res/normal.png";
 import GrassSymbol from "res/grass.png";
@@ -21,26 +22,6 @@ import DragonSymbol from "res/dragon.png";
 import SteelSymbol from "res/steel.png";
 import FairySymbol from "res/fairy.png";
 
-const TYPES = [
-    "normal",
-    "grass",
-    "fire",
-    "water",
-    "electric",
-    "ice",
-    "fighting",
-    "poison",
-    "ground",
-    "flying",
-    "psychic",
-    "bug",
-    "rock",
-    "ghost",
-    "dark",
-    "dragon",
-    "steel",
-    "fairy",
-  ]
 
 interface ITypeSelectProps {
     title: string;
