@@ -48,7 +48,7 @@ const App = () => {
     setTypeData2((await axios.get(`${API_URL}/${type}`)).data);
   }
 
-  const selectPokemonData = async (data: IPokemonFromType[]): Promise<IPokemon[]> => {    
+  const pushPokemonData = async (data: IPokemonFromType[]): Promise<IPokemon[]> => {
     const filteredData = data.filter((x) => !x.pokemon.name.includes("-totem") && !x.pokemon.name.includes("-gmax"));
     const pokemonDataSet: IPokemon[] = [];
 
@@ -63,6 +63,8 @@ const App = () => {
         type1: pokemonData.data.types[0].type.name,
         type2: pokemonData.data.types[1] && pokemonData.data.types[1].type.name,
       })
+
+      setPokemon([...pokemonDataSet]);
     }
 
     return pokemonDataSet;
@@ -97,10 +99,11 @@ const App = () => {
         immuneTo: damages1.no_damage_from.map((t: IPokemonTypeDataItem) => t.name),
       });
 
-      let pokemonData1 = await selectPokemonData(typeData1.pokemon);
-      let pokemonData2 = await selectPokemonData(typeData2.pokemon);
+      let intersection = typeData1.pokemon
+        .filter((t) => typeData2.pokemon
+          .map((p) => p.pokemon.name).includes(t.pokemon.name));
                   
-      setPokemon(pokemonData1.filter((x: IPokemon) => pokemonData2.map((x) => x.id).includes(x.id)));
+      await pushPokemonData(intersection);
     } else if (typeInput1.length > 0) {
       let damages = typeData1.damage_relations;
 
@@ -116,9 +119,7 @@ const App = () => {
 
       setType2(null as unknown as IPokemonType);
       
-      let pokemonData = await selectPokemonData(typeData1.pokemon);
-
-      setPokemon(pokemonData);
+      await pushPokemonData(typeData1.pokemon);
     } else if (typeInput2.length > 0) {
       let damages = typeData2.damage_relations;
 
@@ -134,9 +135,7 @@ const App = () => {
 
       setType1(null as unknown as IPokemonType);
       
-      let pokemonData = await selectPokemonData(typeData2.pokemon);
-
-      setPokemon(pokemonData);
+      await pushPokemonData(typeData2.pokemon);
     }
 
     setLoading(false);
@@ -160,8 +159,8 @@ const App = () => {
       { (pokemon.length > 0) && <button className="btn btn-secondary d-block mx-auto my-3" onClick={() => setShowModal(true)}>Show Type Matchups</button>}
       <TypeMatchupModal show={showModal} onHide={() => setShowModal(false)} type1={type1} type2={type2}/>
       <FetchButton onClick={fetchPokemon} />
-      { loading && <PokeballSpinner /> }
       <PokemonList data={checkFiltered(pokemon)} />
+      { loading && <PokeballSpinner /> }
       <Attribution />
   </div>
 }
