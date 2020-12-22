@@ -20,17 +20,9 @@ const TypeMatchupModal = ({show, onHide, type1, type2}: ITypeMatchupModalProps) 
             return "";
         }
 
-        if (type1.strongAgainst.includes(typeName)) {
-            multiplier *= 2;
-        }
-
-        if (type1.weakAgainst.includes(typeName)) {
-            multiplier *= 0.5;
-        }
-
-        if (type1.zeroAgainst.includes(typeName)) {
-            multiplier *= 0;
-        }
+        multiplier *= type1.strongAgainst.includes(typeName) ? 2 : 1;
+        multiplier *= type1.weakAgainst.includes(typeName) ? 0.5 : 1;
+        multiplier *= type1.zeroAgainst.includes(typeName) ? 0 : 1;
 
         return "x"+multiplier;
     }
@@ -42,17 +34,9 @@ const TypeMatchupModal = ({show, onHide, type1, type2}: ITypeMatchupModalProps) 
 
         let multiplier = 1;
 
-        if (type2.strongAgainst.includes(typeName)) {
-            multiplier *= 2;
-        }
-
-        if (type2.weakAgainst.includes(typeName)) {
-            multiplier *= 0.5;
-        }
-
-        if (type2.zeroAgainst.includes(typeName)) {
-            multiplier *= 0;
-        }
+        multiplier *= type2.strongAgainst.includes(typeName) ? 2 : 1;
+        multiplier *= type2.weakAgainst.includes(typeName) ? 0.5 : 1;
+        multiplier *= type2.zeroAgainst.includes(typeName) ? 0 : 1;
 
         return "x"+multiplier;
     }
@@ -65,31 +49,15 @@ const TypeMatchupModal = ({show, onHide, type1, type2}: ITypeMatchupModalProps) 
         let multiplier = 1;
 
         if (type1) {
-            if (type1.vulnerableTo.includes(typeName)) {
-                multiplier *= 2;
-            }
-
-            if (type1.resistantTo.includes(typeName)) {
-                multiplier *= 0.5;
-            }
-
-            if (type1.immuneTo.includes(typeName)) {
-                multiplier *= 0;
-            }
+            multiplier *= type1.vulnerableTo.includes(typeName) ? 2 : 1;
+            multiplier *= type1.resistantTo.includes(typeName) ? 0.5 : 1;
+            multiplier *= type1.immuneTo.includes(typeName) ? 0 : 1;
         }
 
         if (type2) {
-            if (type2.vulnerableTo.includes(typeName)) {
-                multiplier *= 2;
-            }
-
-            if (type2.resistantTo.includes(typeName)) {
-                multiplier *= 0.5;
-            }
-
-            if (type2.immuneTo.includes(typeName)) {
-                multiplier *= 0;
-            }
+            multiplier *= type2.vulnerableTo.includes(typeName) ? 2 : 1;
+            multiplier *= type2.resistantTo.includes(typeName) ? 0.5 : 1;
+            multiplier *= type2.immuneTo.includes(typeName) ? 0 : 1;
         }
 
         return "x"+multiplier;
