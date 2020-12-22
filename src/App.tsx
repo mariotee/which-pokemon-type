@@ -48,7 +48,7 @@ const App = () => {
     setTypeData2((await axios.get(`${API_URL}/${type}`)).data);
   }
 
-  const pushPokemonData = async (data: IPokemonFromType[]): Promise<IPokemon[]> => {
+  const pushPokemonData = async (data: IPokemonFromType[]) => {
     const filteredData = data.filter((x) => !x.pokemon.name.includes("-totem") && !x.pokemon.name.includes("-gmax"));
     const pokemonDataSet: IPokemon[] = [];
 
@@ -66,8 +66,6 @@ const App = () => {
 
       setPokemon([...pokemonDataSet]);
     }
-
-    return pokemonDataSet;
   }
 
   const fetchPokemon = async () => {
@@ -156,9 +154,9 @@ const App = () => {
       <TypeSelect title={"Type 1"} value={typeInput1} onChange={changeType1} />
       <ExclusiveTypeFilter checked={exclusiveType && !typeInput2} onChange={toggleExclusiveType} />
       <TypeSelect title={"Type 2"} value={typeInput2} onChange={changeType2} />
-      { (pokemon.length > 0) && <button className="btn btn-secondary d-block mx-auto my-3" onClick={() => setShowModal(true)}>Show Type Matchups</button>}
+      { (pokemon.length > 0) && <button className="btn btn-primary d-block mx-auto my-3" onClick={() => setShowModal(true)}>Show Type Matchups</button>}
       <TypeMatchupModal show={showModal} onHide={() => setShowModal(false)} type1={type1} type2={type2}/>
-      <FetchButton onClick={fetchPokemon} />
+      <FetchButton disabled={loading} onClick={fetchPokemon} />
       <PokemonList data={checkFiltered(pokemon)} />
       { loading && <PokeballSpinner /> }
       <Attribution />

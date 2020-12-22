@@ -17,6 +17,10 @@ code {
   min-height: 440pt;
 }
 
+.lbl-large {
+  font-size: 24pt;
+}
+
 .pokeball-spinner {
   margin: 32pt auto 10pt auto;
   height: 125pt;

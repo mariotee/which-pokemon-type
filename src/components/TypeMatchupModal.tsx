@@ -1,6 +1,6 @@
-import { IPokemonType } from 'models/Pokemon';
-import * as React from 'react';
 import { Modal } from 'react-bootstrap';
+
+import { IPokemonType } from 'models/Pokemon';
 
 import { TYPES } from 'Util/pokemonTypes';
 import { Capitalise as C } from "Util/string";
@@ -77,7 +77,7 @@ const TypeMatchupModal = ({show, onHide, type1, type2}: ITypeMatchupModalProps) 
             </thead>
             <tbody>
             {
-                TYPES.map((type) => <tr>
+                TYPES.map((type) => <tr key={"tr-"+type}>
                     <td>{C(type)}</td>
                     <td>{getOffensiveMultiplier1(type)}</td>
                     <td>{getOffensiveMultiplier2(type)}</td>

@@ -55,14 +55,16 @@ const getSymbol = (pokemonType: string) => {
 
 const TypeSelect = ({title, value, onChange}: ITypeSelectProps) => {
     return <React.Fragment>
-        <label className="mx-3">{title}</label>        
-        {value && <img src={getSymbol(value)} alt={"Type: " + value} width={40} />}
+        <div className="d-flex m-auto w-50 justify-content-between align-items-center">
+            <label className="lbl-large">{title}</label>
+            {value && <img src={getSymbol(value)} alt={"Type: " + value} width={64} />}
+        </div>
         <select className="form-control w-50 my-3 mx-auto" value={value} onChange={(e) => {onChange(e.target.value)}}>
         <option></option>
         {
             TYPES.map((type) => <option key={"type1-o-"+type} value={type}>{Capitalise(type)}</option>)
         }
-        </select>        
+        </select>
     </React.Fragment>
 }
 

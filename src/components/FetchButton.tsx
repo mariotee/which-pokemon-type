@@ -1,11 +1,10 @@
-import React from "react";
-
 interface IFetchButtonProps {
     onClick(): void;
+    disabled: boolean;
 }
 
-const FetchButton = ({onClick}: IFetchButtonProps) => <button className="btn btn-primary d-block m-auto" onClick={onClick}>
-    Find Me Pokemon!
+const FetchButton = ({onClick, disabled}: IFetchButtonProps) => <button className="btn btn-info d-block m-auto" onClick={onClick} disabled={disabled}>
+    { disabled ? "Loading..." : "Find Me Pokemon!" }
 </button>
 
 export default FetchButton;
