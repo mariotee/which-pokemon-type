@@ -17,7 +17,6 @@ import TypeSelect from 'components/TypeSelect';
 import FetchButton from "components/FetchButton";
 import PokemonList from 'components/PokemonList';
 import Attribution from 'components/Attribution';
-import PokeballSpinner from 'components/PokeballSpinner';
 import ExclusiveTypeFilter from 'components/ExclusiveTypeFilter';
 import TypeMatchupModal from 'components/TypeMatchupModal';
 import RegionFilters from 'components/RegionFilters';
@@ -181,7 +180,6 @@ const App = () => {
         pokemon.length > 0 && <RegionFilters data={regionFilters} onChange={changeRegionFilter} />
       }
       <PokemonList data={checkFilters(pokemon)} />
-      { loading && <PokeballSpinner /> }
       <Attribution />
   </div>
 }

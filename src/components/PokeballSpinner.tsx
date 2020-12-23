@@ -1,8 +1,5 @@
 import React from "react";
 
-const PokeballSpinner = () => <React.Fragment>
-    <div className="pokeball-spinner" />
-    <span>Loading...</span>
-</React.Fragment>
+const PokeballSpinner = () => <div className="pokeball-spinner" />
 
 export default PokeballSpinner;

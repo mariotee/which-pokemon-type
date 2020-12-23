@@ -14,7 +14,6 @@ code {
 
 .poke-list {
   margin: 32pt auto;
-  min-height: 80pt;
 }
 
 .lbl-large {
@@ -22,50 +21,47 @@ code {
 }
 
 .pokeball-spinner {
-  margin: 32pt auto 10pt auto;
-  height: 125pt;
-  width: 125pt;
-  border: 6pt solid #383b4f;
+  display: inline-block;
+  margin-left: 12pt;
+  height: 32pt;
+  width: 32pt;
+  border: 3pt solid #383b4f;
   border-radius: 50%;
   background-image: linear-gradient(
-    #f51939 58pt,
-    white 58pt
+    #f51939 12.5pt,
+    white 12.5pt
   );
-  animation: load 5s infinite;
+  animation: load 4s infinite;
 }
 /*line*/
 .pokeball-spinner:before {
   position: absolute;
   content: "";
-  height: 9pt;
-  width: 122pt;
+  height: 2pt;
+  width: 28pt;
   background-color: #383b4f;
-  top: 52pt;
-  left: -5pt;
+  top: 12pt;
+  left: 0pt;
 }
 /*button*/
 .pokeball-spinner:after {
   position: absolute;
   border-radius: 50%;
   content: "";
-  height: 45pt;
-  width: 45pt;
+  height: 12pt;
+  width: 12pt;
   background-image: radial-gradient(
-    #ffffffff 0pt, #ffffffff 5pt, 
-    #383b4f 5pt, #383b4f 7.5pt, 
-    #ffffff 7.5pt, #ffffff 16pt,
-    #383b4f 16pt
+    #ffffffff 0pt, #ffffffff 1.25pt, 
+    #383b4f 1pt, #383b4f 2pt, 
+    #ffffff 2pt, #ffffff 4pt,
+    #383b4f 5pt
   );
-  top: 36pt;
-  right: 33pt;
+  top: 7.5pt;
+  right: 7.5pt;
 }
 
 @keyframes load {
   0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
+    transform: rotate(-360deg);
   }
 }
