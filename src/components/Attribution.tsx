@@ -1,4 +1,4 @@
-const Attribution = () => <footer className="text-left">
+const Attribution = () => <footer className="text-left mx-4">
     <p>
         Pokémon and Pokémon character names are trademarks of Nintendo
         <br/>
