@@ -9,10 +9,12 @@ export interface IPokemonListItemProps {
 
 const PokemonListItem = ({pokemon}: IPokemonListItemProps) => {
   return <li className="list-group-item" key={"pokemon-" + pokemon.id}>
-      <span className={styles.pokeNumber}>#{pokemon.number}</span>      
+      <div className={styles.pokeNumber}>#{pokemon.number}</div>
+      <div>
         {C(pokemon.name)}
-        {pokemon.imageUrl ? <img src={pokemon.imageUrl} alt={pokemon.name} /> : <strong className="d-block"> No Image Available</strong>}      
-        <p>Types: {C(pokemon.type1)}{pokemon.type2 && `, ${C(pokemon.type2)}`}</p>
+        {pokemon.imageUrl ? <img src={pokemon.imageUrl} alt={pokemon.name} /> : <strong className="d-block"> No Image Available</strong>}
+      </div>
+      <p>Types: {C(pokemon.type1)}{pokemon.type2 && `, ${C(pokemon.type2)}`}</p>
   </li>
 }
 

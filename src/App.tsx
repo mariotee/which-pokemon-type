@@ -11,7 +11,7 @@ import {
   IPokemonTypeDataItem 
 } from 'models/Pokemon';
 
-import { getRegionsForPokemon } from 'util/pokemon';
+import { filterOutAlternatePokemon, getRegionsForPokemon } from 'util/pokemon';
 
 import TypeSelect from 'components/TypeSelect';
 import FetchButton from "components/FetchButton";
@@ -53,7 +53,7 @@ const App = () => {
   }
 
   const pushPokemonData = async (data: IPokemonFromType[]) => {
-    const filteredData = data.filter((x) => !x.pokemon.name.includes("-totem") && !x.pokemon.name.includes("-gmax"));
+    const filteredData = filterOutAlternatePokemon(data);
     const pokemonDataSet: IPokemon[] = [];
 
     for (const pokemonType of filteredData) {
