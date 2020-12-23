@@ -14,11 +14,11 @@ code {
 
 .poke-list {
   margin: 32pt auto;
-  min-height: 440pt;
+  min-height: 240pt;
 }
 
 .lbl-large {
-  font-size: 24pt;
+  font-size: 16pt;
 }
 
 .pokeball-spinner {

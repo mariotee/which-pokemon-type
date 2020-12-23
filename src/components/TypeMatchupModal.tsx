@@ -2,8 +2,8 @@ import { Modal } from 'react-bootstrap';
 
 import { IPokemonType } from 'models/Pokemon';
 
-import { TYPES } from 'Util/pokemonTypes';
-import { Capitalise as C } from "Util/string";
+import { TYPES } from 'util/pokemon';
+import { Capitalise as C } from "util/string";
 
 export interface ITypeMatchupModalProps {
     show: boolean;

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Capitalise } from "Util/string";
-import { TYPES } from "Util/pokemonTypes";
+import { Capitalise } from "util/string";
+import { TYPES } from "util/pokemon";
 
 import NormalSymbol from "res/normal.png";
 import GrassSymbol from "res/grass.png";
@@ -57,7 +57,7 @@ const TypeSelect = ({title, value, onChange}: ITypeSelectProps) => {
     return <React.Fragment>
         <div className="d-flex m-auto w-50 justify-content-between align-items-center">
             <label className="lbl-large">{title}</label>
-            {value && <img src={getSymbol(value)} alt={"Type: " + value} width={64} />}
+            {value && <img src={getSymbol(value)} alt={"Type: " + value} width={40} />}
         </div>
         <select className="form-control w-50 my-3 mx-auto" value={value} onChange={(e) => {onChange(e.target.value)}}>
         <option></option>

@@ -11,6 +11,8 @@ import {
   IPokemonTypeDataItem 
 } from 'models/Pokemon';
 
+import { getRegionsForPokemon } from 'util/pokemon';
+
 import TypeSelect from 'components/TypeSelect';
 import FetchButton from "components/FetchButton";
 import PokemonList from 'components/PokemonList';
@@ -18,6 +20,7 @@ import Attribution from 'components/Attribution';
 import PokeballSpinner from 'components/PokeballSpinner';
 import ExclusiveTypeFilter from 'components/ExclusiveTypeFilter';
 import TypeMatchupModal from 'components/TypeMatchupModal';
+import RegionFilters from 'components/RegionFilters';
 
 const API_URL = "https://pokeapi.co/api/v2/type";
 
@@ -35,6 +38,7 @@ const App = () => {
   const [type2, setType2] = React.useState(null as unknown as IPokemonType)
 
   const [pokemon, setPokemon] = React.useState([] as IPokemon[]);
+  const [regionFilters, setRegionFilters] = React.useState([] as string[]);
 
   const changeType1 = async (type: string) => {
     setTypeInput1(type);
@@ -143,21 +147,40 @@ const App = () => {
     setExclusiveType(!exclusiveType);
   }
   
-  const checkFiltered = (data: IPokemon[]) => {
-    return (!typeInput2 && exclusiveType) 
-      ? data.filter((x) => x.type1 === typeInput1 && x.type2 === undefined) 
+  const checkFilters = (data: IPokemon[]) => {    
+    let filteredByRegion = regionFilters.length > 0
+      ? data.filter((p) => 
+        regionFilters.some((r) => 
+          getRegionsForPokemon(p).includes(r)))
       : data;
+
+    let filteredByRegionAndType = (!typeInput2 && exclusiveType) 
+      ? filteredByRegion.filter((x) => x.type1 === typeInput1 && x.type2 === undefined) 
+      : filteredByRegion;
+    
+    return filteredByRegionAndType
   }
 
-  return <div className="App">
-      <h1>Pokemon Types</h1>
+  const changeRegionFilter = (region: string) => {
+    if (regionFilters.includes(region)) {
+      setRegionFilters(regionFilters.filter((x) => x !== region));
+    } else {
+      setRegionFilters([...regionFilters, region]);
+    }
+  }
+
+  return <div className="App my-2 mx-auto">
+      <h3>Pokemon Types</h3>
       <TypeSelect title={"Type 1"} value={typeInput1} onChange={changeType1} />
       <ExclusiveTypeFilter checked={exclusiveType && !typeInput2} onChange={toggleExclusiveType} />
       <TypeSelect title={"Type 2"} value={typeInput2} onChange={changeType2} />
       { (pokemon.length > 0) && <button className="btn btn-primary d-block mx-auto my-3" onClick={() => setShowModal(true)}>Show Type Matchups</button>}
       <TypeMatchupModal show={showModal} onHide={() => setShowModal(false)} type1={type1} type2={type2}/>
       <FetchButton disabled={loading} onClick={fetchPokemon} />
-      <PokemonList data={checkFiltered(pokemon)} />
+      {
+        pokemon.length > 0 && <RegionFilters data={regionFilters} onChange={changeRegionFilter} />
+      }
+      <PokemonList data={checkFilters(pokemon)} />
       { loading && <PokeballSpinner /> }
       <Attribution />
   </div>
