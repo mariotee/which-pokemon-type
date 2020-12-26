@@ -72,6 +72,10 @@ const App = () => {
   }
 
   const fetchPokemon = async () => {
+    if (typeInput1.length === 0 && typeInput2.length === 0) {
+      return;
+    }
+    
     setPokemon([]);
     setLoading(true);
 
