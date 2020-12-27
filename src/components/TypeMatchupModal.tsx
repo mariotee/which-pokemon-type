@@ -16,7 +16,7 @@ const TypeMatchupModal = ({show, onHide, type1, type2}: ITypeMatchupModalProps) 
     const getOffensiveMultiplier1 = (typeName: string) => {        
         let multiplier = 1;
 
-        if (!type1) {
+        if (!type1.name) {
             return "";
         }
 
@@ -28,7 +28,7 @@ const TypeMatchupModal = ({show, onHide, type1, type2}: ITypeMatchupModalProps) 
     }
 
     const getOffensiveMultiplier2 = (typeName: string) => {
-        if (!type2) {
+        if (!type2.name) {
             return "";
         }
 
@@ -42,19 +42,19 @@ const TypeMatchupModal = ({show, onHide, type1, type2}: ITypeMatchupModalProps) 
     }
 
     const getDefensiveMultiplier = (typeName: string) => {
-        if (!type1 && !type2) {
+        if (!type1.name && !type2.name) {
             return "";
         }
 
         let multiplier = 1;
 
-        if (type1) {
+        if (type1.name) {
             multiplier *= type1.vulnerableTo.includes(typeName) ? 2 : 1;
             multiplier *= type1.resistantTo.includes(typeName) ? 0.5 : 1;
             multiplier *= type1.immuneTo.includes(typeName) ? 0 : 1;
         }
 
-        if (type2) {
+        if (type2.name) {
             multiplier *= type2.vulnerableTo.includes(typeName) ? 2 : 1;
             multiplier *= type2.resistantTo.includes(typeName) ? 0.5 : 1;
             multiplier *= type2.immuneTo.includes(typeName) ? 0 : 1;
@@ -70,9 +70,9 @@ const TypeMatchupModal = ({show, onHide, type1, type2}: ITypeMatchupModalProps) 
             <thead>
                 <tr>
                     <td className="table-primary">Opponent Type</td>
-                    <td className="table-primary">{type1 && "Offense "+C(type1.name)}</td>
-                    <td className="table-primary">{type2 && "Offense "+C(type2.name)}</td>
-                    <td className="table-primary">{(type1 || type2) && "Defense "}</td>
+                    <td className="table-primary">{type1.name && "Offense "+C(type1.name)}</td>
+                    <td className="table-primary">{type2.name && "Offense "+C(type2.name)}</td>
+                    <td className="table-primary">{(type1.name || type2.name) && "Defense "}</td>
                 </tr>
             </thead>
             <tbody>

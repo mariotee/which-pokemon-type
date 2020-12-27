@@ -33,8 +33,8 @@ const App = () => {
   const [typeData1, setTypeData1] = React.useState({} as IPokemonTypeData);
   const [typeData2, setTypeData2] = React.useState({} as IPokemonTypeData);
   
-  const [type1, setType1] = React.useState(null as unknown as IPokemonType)
-  const [type2, setType2] = React.useState(null as unknown as IPokemonType)
+  const [type1, setType1] = React.useState({} as IPokemonType)
+  const [type2, setType2] = React.useState({} as IPokemonType)
 
   const [pokemon, setPokemon] = React.useState([] as IPokemon[]);
   const [regionFilters, setRegionFilters] = React.useState([] as string[]);
@@ -72,7 +72,7 @@ const App = () => {
   }
 
   const fetchPokemon = async () => {
-    if (typeInput1.length === 0 && typeInput2.length === 0) {
+    if (!typeData1.damage_relations && !typeData2.damage_relations) {
       return;
     }
     
@@ -122,7 +122,7 @@ const App = () => {
         immuneTo: damages.no_damage_from.map((t) => t.name),
       });
 
-      setType2(null as unknown as IPokemonType);
+      setType2({} as IPokemonType);
       
       await pushPokemonData(typeData1.pokemon);
     } else if (typeInput2.length > 0) {
@@ -138,7 +138,7 @@ const App = () => {
         immuneTo: damages.no_damage_from.map((t) => t.name),
       });
 
-      setType1(null as unknown as IPokemonType);
+      setType1({} as IPokemonType);
       
       await pushPokemonData(typeData2.pokemon);
     }
