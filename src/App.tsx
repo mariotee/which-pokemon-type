@@ -72,14 +72,14 @@ const App = () => {
   }
 
   const fetchPokemon = async () => {
-    if (!typeData1.damage_relations && !typeData2.damage_relations) {
+    if (!typeInput1 && !typeInput2 && !typeData1.damage_relations && !typeData2.damage_relations) {
       return;
     }
     
     setPokemon([]);
     setLoading(true);
 
-    if (typeInput1.length > 0 && typeInput2.length > 0) {      
+    if (typeInput1 && typeInput2 && typeData1.damage_relations && typeData2.damage_relations) {      
       let damages1 = typeData1.damage_relations;
 
       setType1({
@@ -109,7 +109,7 @@ const App = () => {
           .map((p) => p.pokemon.name).includes(t.pokemon.name));
                   
       await pushPokemonData(intersection);
-    } else if (typeInput1.length > 0) {
+    } else if (typeInput1 && typeData1.damage_relations) {
       let damages = typeData1.damage_relations;
 
       setType1({
@@ -125,7 +125,7 @@ const App = () => {
       setType2({} as IPokemonType);
       
       await pushPokemonData(typeData1.pokemon);
-    } else if (typeInput2.length > 0) {
+    } else if (typeInput2 && typeData2.damage_relations) {
       let damages = typeData2.damage_relations;
 
       setType2({
