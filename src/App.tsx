@@ -20,11 +20,13 @@ import Attribution from 'components/Attribution';
 import ExclusiveTypeFilter from 'components/ExclusiveTypeFilter';
 import TypeMatchupModal from 'components/TypeMatchupModal';
 import RegionFilters from 'components/RegionFilters';
+import NoPokemonPrompt from 'components/NoPokemonPrompt';
 
 const API_URL = "https://pokeapi.co/api/v2/type";
 
 const App = () => {
   const [loading, setLoading] = React.useState(false);
+  const [noPokes, setNoPokes] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [exclusiveType, setExclusiveType] = React.useState(false);
   const [typeInput1, setTypeInput1] = React.useState("");
@@ -52,8 +54,15 @@ const App = () => {
   }
 
   const pushPokemonData = async (data: IPokemonFromType[]) => {
+    setNoPokes(false);
     const filteredData = filterOutAlternatePokemon(data);
     const pokemonDataSet: IPokemon[] = [];
+
+    if (filteredData.length === 0) {
+      setNoPokes(true);
+
+      return;
+    }
 
     for (const pokemonType of filteredData) {
       let pokemonData = await axios.get(pokemonType.pokemon.url);
@@ -183,6 +192,7 @@ const App = () => {
       {
         pokemon.length > 0 && <RegionFilters data={regionFilters} onChange={changeRegionFilter} />
       }
+      {noPokes && <NoPokemonPrompt />}
       <PokemonList data={checkFilters(pokemon)} />
       <Attribution />
   </div>
