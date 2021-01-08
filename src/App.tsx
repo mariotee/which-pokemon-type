@@ -25,12 +25,14 @@ import NoPokemonPrompt from 'components/NoPokemonPrompt';
 const API_URL = "https://pokeapi.co/api/v2/type";
 
 const App = () => {
-  const [loading, setLoading] = React.useState(false);
+  const [loadingPokes, setLoadingPokes] = React.useState(false);
+  const [loadingTypeData1, setLoadingTypeData1] = React.useState(false);
+  const [loadingTypeData2, setLoadingTypeData2] = React.useState(false);
   const [noPokes, setNoPokes] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [exclusiveType, setExclusiveType] = React.useState(false);
-  const [typeInput1, setTypeInput1] = React.useState("");
-  const [typeInput2, setTypeInput2] = React.useState("");
+  const [typeSelect1, setTypeSelect1] = React.useState("");
+  const [typeSelect2, setTypeSelect2] = React.useState("");
   
   const [typeData1, setTypeData1] = React.useState({} as IPokemonTypeData);
   const [typeData2, setTypeData2] = React.useState({} as IPokemonTypeData);
@@ -41,28 +43,48 @@ const App = () => {
   const [pokemon, setPokemon] = React.useState([] as IPokemon[]);
   const [regionFilters, setRegionFilters] = React.useState([] as string[]);
 
-  const changeType1 = async (type: string) => {
-    setTypeInput1(type);
+  React.useEffect(() => {
+    if (loadingTypeData1 && !loadingTypeData2 && typeData1.damage_relations) {
+      setLoadingTypeData1(false);
+    } else if (loadingTypeData2 && !loadingTypeData1 && typeData2.damage_relations) {
+      setLoadingTypeData2(false);
+    } else if (loadingTypeData1 && loadingTypeData2 
+      && typeData1.damage_relations && typeData2.damage_relations) {
+      setLoadingTypeData1(false);
+      setLoadingTypeData2(false);
+    }
+    
+  }, [loadingTypeData1, loadingTypeData2, typeData1, typeData2, typeSelect1, typeSelect2])
 
-    setTypeData1((await axios.get(`${API_URL}/${type}`)).data);
+  const changeType1 = async (type: string) => {
+    setLoadingTypeData1(true);
+    setTypeData1({} as IPokemonTypeData);
+    setTypeSelect1(type);
+
+    setTypeData1((await axios.get(`${API_URL}/${type}`)).data);    
   }
 
   const changeType2 = async (type: string) => {
-    setTypeInput2(type);
+    setLoadingTypeData2(true);
+    setTypeData2({} as IPokemonTypeData);
+    setTypeSelect2(type);
 
     setTypeData2((await axios.get(`${API_URL}/${type}`)).data);
   }
 
   const pushPokemonData = async (data: IPokemonFromType[]) => {
-    setNoPokes(false);
-    const filteredData = filterOutAlternatePokemon(data);
-    const pokemonDataSet: IPokemon[] = [];
-
-    if (filteredData.length === 0) {
+    if (data.length === 0) {
       setNoPokes(true);
+
+      setTimeout(() => setNoPokes(false), 3000);
 
       return;
     }
+
+    setNoPokes(false);
+
+    const filteredData = filterOutAlternatePokemon(data);
+    const pokemonDataSet: IPokemon[] = [];
 
     for (const pokemonType of filteredData) {
       let pokemonData = await axios.get(pokemonType.pokemon.url);
@@ -81,14 +103,20 @@ const App = () => {
   }
 
   const fetchPokemon = async () => {
-    if (!typeInput1 && !typeInput2 && !typeData1.damage_relations && !typeData2.damage_relations) {
+    if (loadingTypeData1 || loadingTypeData2) {
+      setPokemon([]);
+      
+      return;
+    }
+
+    if (!typeSelect1 && !typeSelect2) {
       return;
     }
     
     setPokemon([]);
-    setLoading(true);
+    setLoadingPokes(true);
 
-    if (typeInput1 && typeInput2 && typeData1.damage_relations && typeData2.damage_relations) {      
+    if (typeData1.damage_relations && typeData2.damage_relations) {      
       let damages1 = typeData1.damage_relations;
 
       setType1({
@@ -118,7 +146,7 @@ const App = () => {
           .map((p) => p.pokemon.name).includes(t.pokemon.name));
                   
       await pushPokemonData(intersection);
-    } else if (typeInput1 && typeData1.damage_relations) {
+    } else if (typeData1.damage_relations) {
       let damages = typeData1.damage_relations;
 
       setType1({
@@ -134,7 +162,7 @@ const App = () => {
       setType2({} as IPokemonType);
       
       await pushPokemonData(typeData1.pokemon);
-    } else if (typeInput2 && typeData2.damage_relations) {
+    } else if (typeData2.damage_relations) {
       let damages = typeData2.damage_relations;
 
       setType2({
@@ -152,7 +180,7 @@ const App = () => {
       await pushPokemonData(typeData2.pokemon);
     }
 
-    setLoading(false);
+    setLoadingPokes(false);
   }
 
   const toggleExclusiveType = () => {
@@ -166,8 +194,8 @@ const App = () => {
           getRegionsForPokemon(p).includes(r)))
       : data;
 
-    let filteredByRegionAndType = (!typeInput2 && exclusiveType) 
-      ? filteredByRegion.filter((x) => x.type1 === typeInput1 && x.type2 === undefined) 
+    let filteredByRegionAndType = (!typeSelect2 && exclusiveType) 
+      ? filteredByRegion.filter((x) => x.type1 === typeSelect1 && x.type2 === undefined) 
       : filteredByRegion;
     
     return filteredByRegionAndType
@@ -183,12 +211,12 @@ const App = () => {
 
   return <div className="App my-2 mx-auto">
       <h3>Pokemon Types</h3>
-      <TypeSelect title={"Type 1"} value={typeInput1} onChange={changeType1} />
-      <ExclusiveTypeFilter checked={exclusiveType && !typeInput2} onChange={toggleExclusiveType} />
-      <TypeSelect title={"Type 2"} value={typeInput2} onChange={changeType2} />
+      <TypeSelect title={"Type 1"} value={typeSelect1} onChange={changeType1} />
+      <ExclusiveTypeFilter checked={exclusiveType && !typeSelect2} onChange={toggleExclusiveType} />
+      <TypeSelect title={"Type 2"} value={typeSelect2} onChange={changeType2} />
       { (pokemon.length > 0) && <button className="btn btn-primary d-block mx-auto my-3" onClick={() => setShowModal(true)}>Show Type Matchups</button>}
       <TypeMatchupModal show={showModal} onHide={() => setShowModal(false)} type1={type1} type2={type2}/>
-      <FetchButton disabled={loading} onClick={fetchPokemon} />
+      <FetchButton disabled={loadingPokes || loadingTypeData1 || loadingTypeData2} loading={loadingPokes} onClick={fetchPokemon} />
       {
         pokemon.length > 0 && <RegionFilters data={regionFilters} onChange={changeRegionFilter} />
       }
