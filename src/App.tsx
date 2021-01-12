@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from "axios";
 
 import './App.css';
 
@@ -12,6 +11,7 @@ import {
 } from 'models/Pokemon';
 
 import { filterOutAlternatePokemon, getRegionsForPokemon } from 'util/pokemon';
+import { getPokemonData, getPokemonTypeData } from 'api';
 
 import TypeSelect from 'components/TypeSelect';
 import FetchButton from "components/FetchButton";
@@ -22,7 +22,6 @@ import TypeMatchupModal from 'components/TypeMatchupModal';
 import RegionFilters from 'components/RegionFilters';
 import NoPokemonPrompt from 'components/NoPokemonPrompt';
 
-const API_URL = "https://pokeapi.co/api/v2/type";
 
 const App = () => {
   const [loadingPokes, setLoadingPokes] = React.useState(false);
@@ -57,19 +56,33 @@ const App = () => {
   }, [loadingTypeData1, loadingTypeData2, typeData1, typeData2, typeSelect1, typeSelect2])
 
   const changeType1 = async (type: string) => {
+    if (type === "") {
+      setTypeData1({} as IPokemonTypeData);
+      setTypeSelect1(type);
+
+      return;
+    }
+
     setLoadingTypeData1(true);
     setTypeData1({} as IPokemonTypeData);
     setTypeSelect1(type);
 
-    setTypeData1((await axios.get(`${API_URL}/${type}`)).data);    
+    setTypeData1(await getPokemonTypeData(type));    
   }
 
   const changeType2 = async (type: string) => {
+    if (type === "") {
+      setTypeData2({} as IPokemonTypeData);
+      setTypeSelect2(type);
+
+      return;
+    }
+
     setLoadingTypeData2(true);
     setTypeData2({} as IPokemonTypeData);
     setTypeSelect2(type);
 
-    setTypeData2((await axios.get(`${API_URL}/${type}`)).data);
+    setTypeData2(await getPokemonTypeData(type));
   }
 
   const pushPokemonData = async (data: IPokemonFromType[]) => {
@@ -87,7 +100,7 @@ const App = () => {
     const pokemonDataSet: IPokemon[] = [];
 
     for (const pokemonType of filteredData) {
-      let pokemonData = await axios.get(pokemonType.pokemon.url);
+      let pokemonData = await getPokemonData(pokemonType);
 
       pokemonDataSet.push({
         id: pokemonData.data.id,
@@ -198,7 +211,7 @@ const App = () => {
       ? filteredByRegion.filter((x) => x.type1 === typeSelect1 && x.type2 === undefined) 
       : filteredByRegion;
     
-    return filteredByRegionAndType
+    return filteredByRegionAndType;
   }
 
   const changeRegionFilter = (region: string) => {
