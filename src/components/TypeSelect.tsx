@@ -50,6 +50,7 @@ const getSymbol = (pokemonType: string) => {
         case "dragon": return DragonSymbol;
         case "steel": return SteelSymbol;
         case "fairy": return FairySymbol;
+        default: throw Error("not an expected type: " + pokemonType);
     }
 }
 

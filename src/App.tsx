@@ -108,7 +108,7 @@ const App = () => {
         number: pokemonData.data.species.url.split("/")[6],
         imageUrl: pokemonData.data.sprites.front_default,
         type1: pokemonData.data.types[0].type.name,
-        type2: pokemonData.data.types[1] && pokemonData.data.types[1].type.name,
+        type2: pokemonData.data.types[1]?.type.name,
       })
 
       setPokemon([...pokemonDataSet]);
