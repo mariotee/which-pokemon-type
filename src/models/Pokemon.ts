@@ -5,6 +5,8 @@ export interface IPokemon {
     imageUrl: string;
     type1: string;
     type2: string;
+    isLegendary: boolean;
+    isMythical: boolean;
 }
 
 export interface IPokemonFromType {
