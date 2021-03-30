@@ -63,31 +63,6 @@ export const filterOutAlternatePokemon = (data: IPokemonFromType[]) => {
   return data.filter((pt) => {
     const x = pt.pokemon.name;
 
-    return !x.includes("-totem") 
-    && !x.includes("-gmax")
-    && !x.includes("-mega")
-    //maybe when they add sprite in PokeAPI
-    && !x.endsWith("-battle-bond")
-    //maybe when they add sprite in PokeAPI
-    && !x.endsWith("-ash")
-    //maybe when they add sprite in PokeAPI
-    && !x.endsWith("-school")
-    && !x.endsWith("-10")
-    && !x.endsWith("-50")
-    && !x.endsWith("-cap")
-    //maybe when they add sprite in PokeAPI
-    && !x.endsWith("-eternamax")
-    //maybe when they add sprites in PokeAPI
-    && !(x.startsWith("minior-") && x !== "minior-red-meteor")
-    //maybe when they add sprites in PokeAPI
-    && !x.endsWith("lycanroc-midnight")
-    //maybe when they add sprites in PokeAPI
-    && !x.endsWith("lycanroc-dusk")
-    //maybe when they add sprites in PokeAPI
-    && !x.endsWith("rockruff-own-tempo")
-    //maybe when they add sprite in PokeAPI
-    && !x.endsWith("-busted")
-    //maybe when they add sprite in PokeAPI
-    && !x.endsWith("magearna-original");
+    return !x.includes("-totem")     
   });
 }
