@@ -1,5 +1,5 @@
 import React from "react";
-import PokeballSpinner from "./PokeballSpinner";
+import PokeballSpinner from "components/PokeballSpinner";
 
 interface IFetchButtonProps {
     onClick(): void;
@@ -7,7 +7,7 @@ interface IFetchButtonProps {
     loading: boolean;
 }
 
-const FetchButton = ({onClick, disabled, loading}: IFetchButtonProps) => <button className="btn btn-info d-block m-auto py-3" onClick={onClick} disabled={disabled}>
+const FetchButton = ({onClick, disabled, loading}: IFetchButtonProps) => <button className="btn btn-info mx-2 py-3" onClick={onClick} disabled={disabled}>
     {
         loading 
             ? <div className="d-flex align-items-center">Loading... <PokeballSpinner /></div>
