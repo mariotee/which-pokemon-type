@@ -22,14 +22,14 @@ code {
 
 .pokeball-spinner {
   display: inline-block;
-  margin-left: 12pt;
-  height: 32pt;
-  width: 32pt;
+  margin-left: 6pt;
+  height: 16pt;
+  width: 16pt;
   border: 3pt solid #383b4f;
   border-radius: 50%;
   background-image: linear-gradient(
-    #f51939 12.5pt,
-    white 12.5pt
+    #f51939 4pt,
+    white 6pt
   );
   animation: load 4s infinite;
 }
@@ -38,9 +38,9 @@ code {
   position: absolute;
   content: "";
   height: 2pt;
-  width: 28pt;
+  width: 10pt;
   background-color: #383b4f;
-  top: 12pt;
+  top: 4pt;
   left: 0pt;
 }
 /*button*/
@@ -48,16 +48,16 @@ code {
   position: absolute;
   border-radius: 50%;
   content: "";
-  height: 12pt;
-  width: 12pt;
+  height: 6pt;
+  width: 6pt;
   background-image: radial-gradient(
-    #ffffffff 0pt, #ffffffff 1.25pt, 
-    #383b4f 1pt, #383b4f 2pt, 
+    #ffffffff 0pt, #ffffffff 1.5pt, 
+    #383b4f 1pt, #383b4f 4pt, 
     #ffffff 2pt, #ffffff 4pt,
     #383b4f 5pt
   );
-  top: 7.5pt;
-  right: 7.5pt;
+  top: 1.875pt;
+  right: 2.125pt;
 }
 
 @keyframes load {

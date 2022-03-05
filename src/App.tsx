@@ -4,24 +4,24 @@ import './App.css';
 
 import {
     IPokemon,
-    IPokemonFromType,
     IPokemonType,
     IPokemonTypeData,
-    IPokemonTypeDataItem
 } from 'models/Pokemon';
 
-import { filterOutAlternatePokemon, getRegionsForPokemon } from 'util/pokemon';
-import { getPokemonData, getPokemonTypeData, getSpeciesData } from 'api';
+import { getRegionsForPokemon } from 'util/pokemon';
+import { getPokemonTypeData } from 'api';
 
-import TypeSelect from 'components/TypeSelect';
-import FetchButton from "components/FetchButton";
+import TypeSelect from 'components/Controls/TypeSelect';
+import FetchButton from "components/Controls/FetchButton";
 import PokemonList from 'components/PokemonList';
 import Attribution from 'components/Attribution';
-import ExclusiveTypeFilter from 'components/ExclusiveTypeFilter';
+import ExclusiveTypeFilter from 'components/Controls/ExclusiveTypeFilter';
 import TypeMatchupModal from 'components/TypeMatchupModal';
-import RegionFilters from 'components/RegionFilters';
+import RegionFilters from 'components/Controls/RegionFilters';
 import NoPokemonPrompt from 'components/NoPokemonPrompt';
-import LegendaryMythicalFilters from 'components/LegendaryMythicalFilters';
+import LegendaryMythicalFilters from 'components/Controls/LegendaryMythicalFilters';
+import CancelButton from 'components/Controls/CancelButton';
+import { fetchPokemon } from 'util/app';
 
 const App = () => {
     const [loadingPokes, setLoadingPokes] = React.useState(false);
@@ -43,6 +43,8 @@ const App = () => {
     const [regionFilters, setRegionFilters] = React.useState([] as string[]);
     const [legendaryFilter, setLegendaryFilter] = React.useState(false);
     const [mythicalFilter, setMythicalFilter] = React.useState(false);
+
+    const cancelled = React.useRef(false);
 
     React.useEffect(() => {
         if (loadingTypeData1 && !loadingTypeData2 && typeData1.damage_relations) {
@@ -85,122 +87,6 @@ const App = () => {
         setTypeSelect2(type);
 
         setTypeData2(await getPokemonTypeData(type));
-    }
-
-    const pushPokemonData = async (data: IPokemonFromType[]) => {
-        if (data.length === 0) {
-            setNoPokes(true);
-
-            setTimeout(() => setNoPokes(false), 3000);
-
-            return;
-        }
-
-        setNoPokes(false);
-
-        const filteredData = filterOutAlternatePokemon(data);
-        const pokemonDataSet: IPokemon[] = [];
-
-        for (const pokemonType of filteredData) {
-
-            let pokemonData = await getPokemonData(pokemonType);
-
-            const speciesData = await getSpeciesData(pokemonData.data);
-
-            pokemonDataSet.push({
-                id: pokemonData.data.id,
-                name: pokemonData.data.name,
-                number: speciesData.data.id,
-                imageUrl: pokemonData.data.sprites.front_default,
-                type1: pokemonData.data.types[0].type.name,
-                type2: pokemonData.data.types[1]?.type.name,
-                isLegendary: speciesData.data.is_legendary,
-                isMythical: speciesData.data.is_mythical,
-            })
-
-            setPokemon([...pokemonDataSet]);
-        }
-    }
-
-    const fetchPokemon = async () => {
-        if (loadingTypeData1 || loadingTypeData2) {
-            setPokemon([]);
-
-            return;
-        }
-
-        if (!typeSelect1 && !typeSelect2) {
-            return;
-        }
-
-        setPokemon([]);
-        setLoadingPokes(true);
-
-        if (typeData1.damage_relations && typeData2.damage_relations) {
-            let damages1 = typeData1.damage_relations;
-
-            setType1({
-                name: typeData1.name,
-                strongAgainst: damages1.double_damage_to.map((t: IPokemonTypeDataItem) => t.name),
-                vulnerableTo: damages1.double_damage_from.map((t: IPokemonTypeDataItem) => t.name),
-                weakAgainst: damages1.half_damage_to.map((t: IPokemonTypeDataItem) => t.name),
-                resistantTo: damages1.half_damage_from.map((t: IPokemonTypeDataItem) => t.name),
-                zeroAgainst: damages1.no_damage_to.map((t: IPokemonTypeDataItem) => t.name),
-                immuneTo: damages1.no_damage_from.map((t: IPokemonTypeDataItem) => t.name),
-            });
-
-            let damages2 = typeData2.damage_relations;
-
-            setType2({
-                name: typeData2.name,
-                strongAgainst: damages2.double_damage_to.map((t: IPokemonTypeDataItem) => t.name),
-                vulnerableTo: damages2.double_damage_from.map((t: IPokemonTypeDataItem) => t.name),
-                weakAgainst: damages2.half_damage_to.map((t: IPokemonTypeDataItem) => t.name),
-                resistantTo: damages2.half_damage_from.map((t: IPokemonTypeDataItem) => t.name),
-                zeroAgainst: damages2.no_damage_to.map((t: IPokemonTypeDataItem) => t.name),
-                immuneTo: damages1.no_damage_from.map((t: IPokemonTypeDataItem) => t.name),
-            });
-
-            let intersection = typeData1.pokemon
-                .filter((t) => typeData2.pokemon
-                    .map((p) => p.pokemon.name).includes(t.pokemon.name));
-
-            await pushPokemonData(intersection);
-        } else if (typeData1.damage_relations) {
-            let damages = typeData1.damage_relations;
-
-            setType1({
-                name: typeData1.name,
-                strongAgainst: damages.double_damage_to.map((t) => t.name),
-                vulnerableTo: damages.double_damage_from.map((t) => t.name),
-                weakAgainst: damages.half_damage_to.map((t) => t.name),
-                resistantTo: damages.half_damage_from.map((t) => t.name),
-                zeroAgainst: damages.no_damage_to.map((t) => t.name),
-                immuneTo: damages.no_damage_from.map((t) => t.name),
-            });
-
-            setType2({} as IPokemonType);
-
-            await pushPokemonData(typeData1.pokemon);
-        } else if (typeData2.damage_relations) {
-            let damages = typeData2.damage_relations;
-
-            setType2({
-                name: typeData2.name,
-                strongAgainst: damages.double_damage_to.map((t) => t.name),
-                vulnerableTo: damages.double_damage_from.map((t) => t.name),
-                weakAgainst: damages.half_damage_to.map((t) => t.name),
-                resistantTo: damages.half_damage_from.map((t) => t.name),
-                zeroAgainst: damages.no_damage_to.map((t) => t.name),
-                immuneTo: damages.no_damage_from.map((t) => t.name),
-            });
-
-            setType1({} as IPokemonType);
-
-            await pushPokemonData(typeData2.pokemon);
-        }
-
-        setLoadingPokes(false);
     }
 
     const toggleExclusiveType = () => {
@@ -247,6 +133,17 @@ const App = () => {
         }
     }
 
+    const handleFetchPokemon = async () => {
+        await fetchPokemon({
+            loadingTypeData1, loadingTypeData2,
+            typeSelect1, typeSelect2,
+            setPokemon, setLoadingPokes,
+            setType1, setType2,
+            typeData1, typeData2,
+            setNoPokes, cancelled
+        })
+    }
+
     return <div className="App my-2 mx-auto">
         <h3>Pokemon Types</h3>
         <TypeSelect title={"Type 1"} value={typeSelect1} onChange={changeType1} />
@@ -254,7 +151,8 @@ const App = () => {
         <TypeSelect title={"Type 2"} value={typeSelect2} onChange={changeType2} />
         {(pokemon.length > 0) && <button className="btn btn-primary d-block mx-auto my-3" onClick={() => setShowModal(true)}>Show Type Matchups</button>}
         <TypeMatchupModal show={showModal} onHide={() => setShowModal(false)} type1={type1} type2={type2} />
-        <FetchButton disabled={loadingPokes || loadingTypeData1 || loadingTypeData2} loading={loadingPokes} onClick={fetchPokemon} />
+        <FetchButton disabled={loadingPokes || loadingTypeData1 || loadingTypeData2} loading={loadingPokes} onClick={handleFetchPokemon} />
+        <CancelButton disabled={!loadingPokes} onClick={() => { cancelled.current = true }} />
         {
             pokemon.length > 0 && <RegionFilters data={regionFilters} onChange={changeRegionFilter} />
         }
