@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/which-pokemon-type/static/css/main.1691c2d1.css",
-    "main.js": "/which-pokemon-type/static/js/main.8ca39a7c.js",
+    "main.js": "/which-pokemon-type/static/js/main.63137b5b.js",
     "static/media/bug.png": "/which-pokemon-type/static/media/bug.167802fda79d81f5be4c.png",
     "static/media/grass.png": "/which-pokemon-type/static/media/grass.0c8a77ef01439953a8d8.png",
     "static/media/psychic.png": "/which-pokemon-type/static/media/psychic.7f7cc4f44da8c08285cd.png",
@@ -22,10 +22,10 @@
     "static/media/normal.png": "/which-pokemon-type/static/media/normal.a977664895194f41f285.png",
     "index.html": "/which-pokemon-type/index.html",
     "main.1691c2d1.css.map": "/which-pokemon-type/static/css/main.1691c2d1.css.map",
-    "main.8ca39a7c.js.map": "/which-pokemon-type/static/js/main.8ca39a7c.js.map"
+    "main.63137b5b.js.map": "/which-pokemon-type/static/js/main.63137b5b.js.map"
   },
   "entrypoints": [
     "static/css/main.1691c2d1.css",
-    "static/js/main.8ca39a7c.js"
+    "static/js/main.63137b5b.js"
   ]
 }
