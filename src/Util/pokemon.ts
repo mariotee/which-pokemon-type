@@ -21,6 +21,19 @@ export const TYPES = [
     "fairy",
 ]
 
+export const Regions = [
+  "Kanto",
+  "Johto",
+  "Hoenn",
+  "Sinnoh",
+  "Kalos",
+  "Unova",
+  "Alola",
+  "Galar",
+  "Hisui",
+  "Paldea",
+]
+
 export const getRegionsForPokemon = (pokemon: IPokemon): string[] => {
     const regions: string[] = [];
 
@@ -54,6 +67,14 @@ export const getRegionsForPokemon = (pokemon: IPokemon): string[] => {
 
     if ((pokemon.number >= 810 && pokemon.number <= 898) || pokemon.name.includes("-galar")) {
       regions.push("Galar");
+    }
+
+    if ((pokemon.number >= 899 && pokemon.number <= 905) || pokemon.name.includes("-hisui")) {
+      regions.push("Hisui");
+    }
+
+    if ((pokemon.number >= 906 /*&& pokemon.number <= 1010 //walking wake*/) || pokemon.name.includes("-paldea")) {
+      regions.push("Paldea");
     }
 
     return regions;
